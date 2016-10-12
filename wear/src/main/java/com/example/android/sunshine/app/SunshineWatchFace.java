@@ -29,12 +29,18 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
 import android.view.SurfaceHolder;
 import android.view.WindowInsets;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.DataApi;
+import com.google.android.gms.wearable.DataEventBuffer;
 import com.hfad.wear.R;
 
 import java.lang.ref.WeakReference;
@@ -86,7 +92,8 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
         }
     }
 
-    private class Engine extends CanvasWatchFaceService.Engine {
+    private class Engine extends CanvasWatchFaceService.Engine implements DataApi.DataListener,
+            GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
         final Handler mUpdateTimeHandler = new EngineHandler(this);
         boolean mRegisteredTimeZoneReceiver = false;
         Paint mBackgroundPaint;
@@ -110,7 +117,7 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
         boolean mLowBitAmbient;
 
         @Override
-        public void onCreate(SurfaceHolder holder) {
+        public void onCreate(SurfaceHolder holder) { //init service
             super.onCreate(holder);
 
             setWatchFaceStyle(new WatchFaceStyle.Builder(SunshineWatchFace.this)
@@ -203,9 +210,9 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
         }
 
         @Override
-        public void onTimeTick() {
+        public void onTimeTick() { //called every second in ambient mode.
             super.onTimeTick();
-            invalidate();
+            invalidate(); //invalidate canvas & redraw
         }
 
         @Override
@@ -298,6 +305,26 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
                         - (timeMs % INTERACTIVE_UPDATE_RATE_MS);
                 mUpdateTimeHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, delayMs);
             }
+        }
+
+        @Override
+        public void onConnected(@Nullable Bundle bundle) {
+
+        }
+
+        @Override
+        public void onConnectionSuspended(int i) {
+
+        }
+
+        @Override
+        public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+        }
+
+        @Override
+        public void onDataChanged(DataEventBuffer dataEventBuffer) {
+
         }
     }
 }

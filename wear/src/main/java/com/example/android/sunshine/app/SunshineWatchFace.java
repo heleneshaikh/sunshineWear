@@ -276,6 +276,7 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
             } else {
                 canvas.drawRect(0, 0, bounds.width(), bounds.height(), backgroundPaint);
                 datePaint.setColor(resources.getColor(R.color.primary_light));
+
                 lowTemperaturePaint.setColor(resources.getColor(R.color.primary_light));
             }
 

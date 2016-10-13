@@ -37,11 +37,9 @@ import org.json.JSONObject;
 public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
-
     private static final String EXTRA_DATA = "data";
     private static final String EXTRA_WEATHER = "weather";
     private static final String EXTRA_LOCATION = "location";
-
     public static final int NOTIFICATION_ID = 1;
 
     /**
@@ -55,7 +53,6 @@ public class MyGcmListenerService extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
         // Time to unparcel the bundle!
         if (!data.isEmpty()) {
-            // TODO: gcm_default sender ID comes from the API console
             String senderId = getString(R.string.gcm_defaultSenderId);
             if (senderId.length() == 0) {
                 Toast.makeText(this, "SenderID string needs to be set", Toast.LENGTH_LONG).show();

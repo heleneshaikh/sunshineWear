@@ -47,7 +47,6 @@ public class RegistrationIntentService extends IntentService {
                 // are local.
                 InstanceID instanceID = InstanceID.getInstance(this);
 
-                // TODO: gcm_default sender ID comes from the API console
                 String senderId = getString(R.string.gcm_defaultSenderId);
                 if ( senderId.length() != 0 ) {
                     String token = instanceID.getToken(senderId,
